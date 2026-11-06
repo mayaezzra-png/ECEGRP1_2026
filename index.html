@@ -104,22 +104,6 @@
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .hero h1, .hero p, .hero .btn { opacity: 1; }
-      el.classList.add('visible');
-      const prix = el.querySelector('.prix');
-      if (prix) compter(prix);
-      observateur.unobserve(el);
-    });
-  }, { threshold: 0.2 });
-
-</body>
-</html>  document.querySelectorAll('.cache').forEach((el) => observateur.observe(el));
-
-  document.getElementById('formulaire').addEventListener('submit', function (e) {
-    e.preventDefault();
-    this.reset();
-    document.getElementById('merci').classList.add('montre');
-  });
-</script>
     .cache { opacity: 1; transform: none; }
   }
 </style>
@@ -132,12 +116,6 @@
       <a class="logo" href="#">Atelier Rayon</a>
       <ul>
         <li><a href="#tarifs">Tarifs</a></li>
-      const el = entree.target;
-      const rang = [...el.parentElement.children].indexOf(el);
-      el.style.transitionDelay = (rang * 0.12) + 's';
-  const observateur = new IntersectionObserver((entrees) => {
-    entrees.forEach((entree) => {
-      if (!entree.isIntersecting) return;
         <li><a href="#atelier">Atelier</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -164,45 +142,21 @@
 <main>
   <section id="tarifs">
     <div class="wrap">
-  }
-
       <h2 class="cache">Nos tarifs</h2>
       <div class="tarifs">
         <ul>
           <li class="cache"><span>Crevaison<small>Chambre à air comprise</small></span><span class="prix" data-valeur="12">12 €</span></li>
           <li class="cache"><span>Réglage des freins et des vitesses</span><span class="prix" data-valeur="25">25 €</span></li>
-    const debut = performance.now();
-    const duree = 900;
-    (function image(t) {
-      const p = Math.min((t - debut) / duree, 1);
-      el.textContent = Math.round(fin * (1 - Math.pow(1 - p, 3))) + ' €';
-      if (p < 1) requestAnimationFrame(image);
-    })(debut);
           <li class="cache"><span>Changement de chaîne<small>Pièce en supplément</small></span><span class="prix" data-valeur="20">20 €</span></li>
           <li class="cache"><span>Révision complète<small>Nettoyage, graissage, contrôle de 30 points</small></span><span class="prix" data-valeur="79">79 €</span></li>
-    const fin = Number(el.dataset.valeur);
-    if (reduit) return;
         </ul>
-  function compter(el) {
       </div>
       <p class="note cache">Les pièces sont facturées à part. Nous vous donnons le prix avant toute intervention.</p>
-
     </div>
-    </div>
-  const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   </section>
 
-      </form>
   <section id="atelier" class="infos">
     <div class="wrap cols">
-  </section>
-
-<script>
-</main>
-
-<footer>© 2026 Atelier Rayon</footer>
-        <button type="submit">Envoyer ma demande</button>
-        <p id="merci" role="status">Merci, nous vous répondons sous 24 h.</p>
       <div class="cache">
         <h3>Horaires</h3>
         <dl>
@@ -211,20 +165,65 @@
           <dt>Dimanche, lundi</dt><dd>Fermé</dd>
         </dl>
       </div>
-        <label>Votre e-mail <input type="email" name="email" required></label>
-        <label>Quel est le problème ? <textarea name="message" required></textarea></label>
+      <div class="cache">
+        <h3>Adresse</h3>
+        <p>12 rue des Jardins<br>75011 Paris</p>
+        <p style="margin-top:.75rem">01 23 45 67 89<br>contact@atelier-rayon.fr</p>
+      </div>
     </div>
   </section>
 
-        <label>Votre nom <input type="text" name="nom" required></label>
   <section id="contact">
     <div class="wrap">
       <h2 class="cache">Demander un devis</h2>
       <form id="formulaire" class="cache">
-      <div class="cache">
-        <h3>Adresse</h3>
-        <p>12 rue des Jardins<br>75011 Paris</p>
-        <p style="margin-top:.75rem">01 23 45 67 90<br>contact@atelier-rayon.fr</p>
+        <label>Votre nom <input type="text" name="nom" required></label>
+        <label>Votre e-mail <input type="email" name="email" required></label>
+        <label>Quel est le problème ? <textarea name="message" required></textarea></label>
+        <button type="submit">Envoyer ma demande</button>
+        <p id="merci" role="status">Merci, nous vous répondons sous 24 h.</p>
+      </form>
+    </div>
+  </section>
+</main>
 
+<footer>© 2026 Atelier Rayon</footer>
 
+<script>
+  const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  function compter(el) {
+    const fin = Number(el.dataset.valeur);
+    if (reduit) return;
+    const debut = performance.now();
+    const duree = 900;
+    (function image(t) {
+      const p = Math.min((t - debut) / duree, 1);
+      el.textContent = Math.round(fin * (1 - Math.pow(1 - p, 3))) + ' €';
+      if (p < 1) requestAnimationFrame(image);
+    })(debut);
+  }
+
+  const observateur = new IntersectionObserver((entrees) => {
+    entrees.forEach((entree) => {
+      if (!entree.isIntersecting) return;
+      const el = entree.target;
+      const rang = [...el.parentElement.children].indexOf(el);
+      el.style.transitionDelay = (rang * 0.12) + 's';
+      el.classList.add('visible');
+      const prix = el.querySelector('.prix');
+      if (prix) compter(prix);
+      observateur.unobserve(el);
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.cache').forEach((el) => observateur.observe(el));
+
+  document.getElementById('formulaire').addEventListener('submit', function (e) {
+    e.preventDefault();
+    this.reset();
+    document.getElementById('merci').classList.add('montre');
+  });
+</script>
+</body>
+</html>
